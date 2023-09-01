@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/bndr/gojenkins"
+	"github.com/iamayushm/gojenkins"
 	"github.com/spf13/viper"
 	"io/ioutil"
 	"net/http"
@@ -36,6 +36,7 @@ type Config struct {
 // Args:
 //
 // Returns
+//
 //	string or error
 func (j *Config) SetConfigPath(path string) {
 	dir, file := filepath.Split(path)
@@ -47,9 +48,11 @@ func (j *Config) SetConfigPath(path string) {
 // CheckIfExists check if file exists
 //
 // Args:
+//
 //	path - string
 //
 // Returns
+//
 //	error
 func (j *Config) CheckIfExists() error {
 	var err error
@@ -66,10 +69,10 @@ func (j *Config) CheckIfExists() error {
 //
 // $HOME/.config/jenkinsctl/config.json
 //
-//
 // Args:
 //
 // Returns
+//
 //	nil or error
 func (j *Config) LoadConfig() (config Config, err error) {
 	viper.AddConfigPath(j.ConfigPath)
@@ -89,6 +92,7 @@ func (j *Config) LoadConfig() (config Config, err error) {
 // PluginsShow show all plugins installed and enabled
 //
 // Returns
+//
 //	nil or error
 func (j *Jenkins) PluginsShow() {
 	p, _ := j.Instance.GetPlugins(j.Context, 1)
@@ -106,9 +110,11 @@ func (j *Jenkins) PluginsShow() {
 // DeleteJob will delete a job
 //
 // Args:
+//
 //	jobName - job name
 //
 // Returns:
+//
 //	error or nil
 func (j *Jenkins) DeleteJob(jobName string) error {
 	job, err := j.Instance.GetJob(j.Context, jobName)
@@ -124,9 +130,11 @@ func (j *Jenkins) DeleteJob(jobName string) error {
 // JobGetConfig get the configuration from job
 //
 // Args:
+//
 //	jobName - job name
 //
 // Returns:
+//
 //	error or nil
 func (j *Jenkins) JobGetConfig(jobName string) error {
 	job, err := j.Instance.GetJob(j.Context, jobName)
@@ -144,7 +152,6 @@ func (j *Jenkins) JobGetConfig(jobName string) error {
 // Args:
 //
 // Returns
-//
 func (j *Jenkins) ShowBuildQueue() error {
 	queue, _ := j.Instance.GetQueue(j.Context)
 	totalTasks := 0
@@ -192,9 +199,11 @@ func (j *Jenkins) ShowStatus(object string) {
 // GetLastCompletedBuild get last completed build
 //
 // Args:
+//
 //	jobName - Job Name
 //
 // Returns:
+//
 //	error or nil
 func (j *Jenkins) GetLastCompletedBuild(jobName string) error {
 	fmt.Printf("⏳ Collecting job information...\n")
@@ -220,10 +229,12 @@ func (j *Jenkins) GetLastCompletedBuild(jobName string) error {
 // CreateView will create a view
 //
 // Args:
+//
 //	viewname - view name
 //	viewType - view type
 //
 // Returns
+//
 //	error or nil
 func (j *Jenkins) CreateView(viewName string, viewType string) error {
 	fmt.Printf("%s\n", viewType)
@@ -239,11 +250,13 @@ func (j *Jenkins) CreateView(viewName string, viewType string) error {
 // DownloadArtifacts will download artifacts
 //
 // Args:
+//
 //	jobName - job name
 //	buildID - build ID
 //	pathToSave - path to save artifact
 //
 // Returns:
+//
 //	error or nil
 func (j *Jenkins) DownloadArtifacts(jobName string, buildID int64, pathToSave string) error {
 	job, err := j.Instance.GetJob(j.Context, jobName)
@@ -274,9 +287,11 @@ func (j *Jenkins) DownloadArtifacts(jobName string, buildID int64, pathToSave st
 // GetLastUnstableBuild will get last unstable build
 //
 // Args:
+//
 //	jobName - Job Name
 //
 // Returns:
+//
 //	error or nil
 func (j *Jenkins) GetLastUnstableBuild(jobName string) error {
 	fmt.Printf("⏳ Collecting job information...\n")
@@ -302,9 +317,11 @@ func (j *Jenkins) GetLastUnstableBuild(jobName string) error {
 // GetLastStableBuild will get last stable build
 //
 // Args:
+//
 //	jobName - Job Name
 //
 // Returns:
+//
 //	error or nil
 func (j *Jenkins) GetLastStableBuild(jobName string) error {
 	fmt.Printf("⏳ Collecting job information...\n")
@@ -330,9 +347,11 @@ func (j *Jenkins) GetLastStableBuild(jobName string) error {
 // GetLastBuild will get last build
 //
 // Args:
+//
 //	jobName - Job Name
 //
 // Returns:
+//
 //	error or nil
 func (j *Jenkins) GetLastBuild(jobName string) error {
 	fmt.Printf("⏳ Collecting job information...\n")
@@ -358,9 +377,11 @@ func (j *Jenkins) GetLastBuild(jobName string) error {
 // GetLastFailedBuild will get last failed build
 //
 // Args:
+//
 //	jobName - Job Name
 //
 // Returns:
+//
 //	error or nil
 func (j *Jenkins) GetLastFailedBuild(jobName string) error {
 	fmt.Printf("⏳ Collecting job information...\n")
@@ -398,9 +419,11 @@ func (j *Jenkins) AddJobToView(viewName string, jobName string) error {
 // GetLastSuccessfulBuild will get last failed build
 //
 // Args:
+//
 //	jobName - Job Name
 //
 // Returns:
+//
 //	error or nil
 func (j *Jenkins) GetLastSuccessfulBuild(jobName string) error {
 	fmt.Printf("⏳ Collecting job information...\n")
@@ -427,6 +450,7 @@ func (j *Jenkins) GetLastSuccessfulBuild(jobName string) error {
 // Args:
 //
 // Returns:
+//
 //	error or nil
 func (j *Jenkins) ShowAllJobs() error {
 	jobs, err := j.Instance.GetAllJobs(j.Context)
@@ -448,7 +472,8 @@ func (j *Jenkins) ShowAllJobs() error {
 // Args:
 //
 // Returns:
-// 	error or nil
+//
+//	error or nil
 func (j *Jenkins) ShowViews() error {
 	views, err := j.Instance.GetView(j.Context, "All")
 	if err != nil {
@@ -475,10 +500,12 @@ func getFileAsString(path string) (string, error) {
 // CreateJob will create a job based on XML specification
 //
 // Args:
+//
 //	xmlFile	- Job described in XML format
 //	jobName - Job Name
 //
 // Returns:
+//
 //	error or nil
 func (j *Jenkins) CreateJob(xmlFile string, jobName string) error {
 	jobData, err := getFileAsString(xmlFile)
@@ -493,9 +520,11 @@ func (j *Jenkins) CreateJob(xmlFile string, jobName string) error {
 // ShowNodes show all plugins installed and enabled
 //
 // Args:
+//
 //	showStatus - show only the
 //
 // Returns
+//
 //	code return, nil or error
 func (j *Jenkins) ShowNodes(showStatus string) ([]string, error) {
 	var hosts []string
@@ -535,7 +564,6 @@ func (j *Jenkins) ShowNodes(showStatus string) ([]string, error) {
 // Args:
 //
 // Returns
-//
 func (j *Jenkins) Init(config Config) error {
 	j.JenkinsUser = config.JenkinsUser
 	j.Server = config.Server
@@ -555,7 +583,6 @@ func (j *Jenkins) Init(config Config) error {
 // ServerInfo will show information regarding the server
 //
 // Args:
-//
 func (j *Jenkins) ServerInfo() error {
 	j.Instance.Info(j.Context)
 	fmt.Printf("✅ Connected with: %s\n", j.JenkinsUser)
@@ -569,9 +596,11 @@ func (j *Jenkins) ServerInfo() error {
 // is reachable
 //
 // Args:
+//
 //	string - Jenkins url
 //
 // Returns
+//
 //	nil or error
 func serverReachable(url string) error {
 	_, err := http.Get(url)

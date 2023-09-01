@@ -1,4 +1,4 @@
-**jenkinsctl** is a jenkins CLI based on [gojenkins](https://github.com/bndr/gojenkins) library. 🚀
+**jenkinsctl** is a jenkins CLI based on [gojenkins](https://github.com/iamayushm/gojenkins) library. 🚀
 
 :one: Generate a token for the username that will manage the jenkins.
 
